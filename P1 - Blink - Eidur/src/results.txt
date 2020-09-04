@@ -1,0 +1,37 @@
+Allar niðurstöður eru miðaðar við 545 innri lykkjur og 500 ytri 
+sem skapa 500 ms delay þegar 8 bita integer er summaður. 
+
+Summa:
+
+8 bit:
+
+500 ms
+
+545000 loops / sec
+
+64 bit summa:
+
+1360 ms 
+
+200367 loops / sec
+
+double summa:
+
+2801 ms
+
+97287 loops / sec
+
+Deiling:
+
+4231 ms
+
+64406 loops / sec
+
+margföldun:
+
+620 ms
+
+439516 loops / sec
+
+
+
