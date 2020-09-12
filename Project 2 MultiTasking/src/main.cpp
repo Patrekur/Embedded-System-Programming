@@ -25,7 +25,7 @@ void loop() {
   val = analogIn.getval();
   Serial.println(digiin.is_hi());
   
-  val = map(val, 170, 220, 1, 245);
+  val = map(val, 150, 220, 1, 245);
   Serial.println(val);
   delay(500);
   // analogOut.dutyset(val/(float)255);
@@ -37,6 +37,7 @@ void loop() {
 
 ISR(TIMER1_COMPB_vect)
 {
+
 
 PORTB &= ~(1 << 5);
 
