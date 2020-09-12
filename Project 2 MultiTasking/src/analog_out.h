@@ -6,12 +6,14 @@ public:
     Analog_out(float duty);
     void init();
     void dutyset(float duty);
+    void changemode();
 
 private:
 
-    // Scales the cmprcount value down for a shorter duty cycle
+    bool mode;
+    // Scales the cmprcount value down for a shorter duty cycle. The value for compare register B
     float dutyCycle;
-    // PWM operating at 1 Hz given 1024 prescaler
-    const int cmprcount = 16000000/1024 - 1;
+    // Compare register value for compareA
+    unsigned int cmprcount;
 
 };
