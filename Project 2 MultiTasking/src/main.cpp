@@ -4,11 +4,11 @@
 #include "analog_in.h"
 #include "analog_out.h"
 
-Digital_out digiout(5); // pin 13 LEDbuiltin
-Digital_in  digiin(4);  // pin 12 Port B
-Analog_in analogIn(0); // Analog pin A0 portC?
-Analog_out analogOut(0.5); // duty cycle = 50%
-int val = 0;
+Digital_out digiout(5);
+Digital_in  digiin(2);
+Analog_in analogIn(0);
+Analog_out analogOut(0.5);
+unsigned int val = 0;
 
 void setup() {
 
@@ -17,35 +17,43 @@ digiin.init();
 analogIn.init();
 analogOut.init();
 sei(); 
-Serial.begin(9600); 
+Serial.begin(9600);
+analogOut.changemode();
 }
 
 void loop() {
 
-  val = analogIn.getval();
-  Serial.print("digiin.is_hi:  ");Serial.println(digiin.is_hi());
-  Serial.print("val fyrir:    ");Serial.println(val);
-  val = map(val, 150, 220, 1, 245);
-  Serial.print("mapped val:   ");Serial.println(val);
-  delay(500);
-  // analogOut.dutyset(val/(float)255);
-  
+  //val = map(analogIn.getval(), 40, 200, 1, 255);
+  val = 255 - 5*analogIn.getval();
+  Serial.println(val);
+  analogOut.dutyset(val/255.0);
 
 }
 
 // Interrupt routines
 
+ISR(INT0_vect) {
+
+  cli();
+
+  Serial.println("Interrupt!!");
+
+  analogOut.changemode();
+
+  sei();
+
+}
+
 ISR(TIMER1_COMPB_vect)
 {
 
-
-PORTB &= ~(1 << 5);
+  digiout.set_lo();
 
 }
 
 ISR(TIMER1_COMPA_vect)
 {
 
-PORTB |= (1 << 5);
+  digiout.set_hi();
 
 }

@@ -9,28 +9,29 @@ Digital_in::Digital_in(int pin) {
 
 void Digital_in::init() {
 
-    DDRB &= ~pinMask; 
+    DDRD &= ~pinMask; 
+     // Input pullup
+    PORTD |= pinMask;
 
-    // Input pullup
-    PORTB |= pinMask;
+    // Set to trigger on falling edge
+    EICRA |= (1 << ISC10);
+    // Turn on interrupt 
+    EIMSK |= (1 << INT0);
 
 }
 
 
 bool Digital_in::is_hi() {
 
-    bool isClosed = 0;
-    isClosed = PINB & pinMask;
-
-    return isClosed;
+    return PIND & pinMask;
 
 }
 
 bool Digital_in::is_lo() {
 
     bool isOpen = 0;
-    isOpen = PINB & pinMask;
+    isOpen = PIND & pinMask;
 
-    return isOpen;
+    return !is_hi();
 
 }
