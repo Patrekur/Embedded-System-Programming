@@ -23,10 +23,10 @@ Serial.begin(9600);
 void loop() {
 
   val = analogIn.getval();
-  Serial.println(digiin.is_hi());
-  
+  Serial.print("digiin.is_hi:  ");Serial.println(digiin.is_hi());
+  Serial.print("val fyrir:    ");Serial.println(val);
   val = map(val, 150, 220, 1, 245);
-  Serial.println(val);
+  Serial.print("mapped val:   ");Serial.println(val);
   delay(500);
   // analogOut.dutyset(val/(float)255);
   
