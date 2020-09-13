@@ -3,8 +3,8 @@
 Analog_out::Analog_out(float duty) {
 
     dutyCycle = duty;
-    cmprcount = 16000000/256 - 1;
-    bool mode = false;
+    cmprcount = 16000000/256 - 1; //65295
+    mode = false;
 
 }
 
@@ -20,7 +20,7 @@ void Analog_out::init() {
     // Clear timer on compare 
     TCCR1B |= (1 << WGM12); 
     // set interrupt on compare match A and B
-    TIMSK1 |= (1 << OCIE1A) | (1 << OCIE0B);
+    TIMSK1 |= (1 << OCIE1A) | (1 << OCIE0B); // segir hvaða registerar triggera interrupt
     // set prescaler to 256 and start the timer
     TCCR1B |= (1 << CS12);
 
@@ -28,10 +28,11 @@ void Analog_out::init() {
 
 void Analog_out::dutyset(float duty) {
 
-   // Serial.println((int)(duty*cmprcount));
-
     dutyCycle = duty;
-    OCR1B = (int)(cmprcount*dutyCycle);
+    OCR1B = (unsigned int)(cmprcount*dutyCycle);
+    //Serial.println("In class:");
+    //Serial.println((unsigned int)(cmprcount * dutyCycle));
+    //Serial.println(cmprcount);
 
 }
 
@@ -40,20 +41,20 @@ void Analog_out::changemode() {
 if (mode == false) {
 
     // Counter changed to a low level to provide a high PWM frequency
-    unsigned int cmprcount = 30;
+    cmprcount = 100;
     OCR1A = cmprcount;
-    OCR1B = cmprcount * dutyCycle;
-    TCNT1 = 0;
+    OCR1B = (unsigned int)(cmprcount * dutyCycle);
+    //TCNT1 = 0;
     mode = true;
 
 }
 
 else {
 
-    unsigned int cmprcount = 16000000/256 - 1;
+    cmprcount = 16000000/256 - 1;
     OCR1A = cmprcount;
-    OCR1B = cmprcount * dutyCycle;
-    TCNT1 = 0;
+    OCR1B = (int)cmprcount * dutyCycle;
+    //TCNT1 = 0;
     mode = false;
 
 }
