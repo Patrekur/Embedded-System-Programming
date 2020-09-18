@@ -12,6 +12,12 @@ unsigned int val = 0;
 
 
 double mapOneRangeToAnother(double sourceNumber, double fromA, double fromB, double toA, double toB, int decimalPrecision ) {
+    // https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
+    // We needed to map analog sensor value to its true potential range of 0-255
+    // to be able to then use it to affect the duty cycle.
+    // This custom function, unlike the map() function from the arduino library, returns double values. 
+    if (sourceNumber > fromB){fromB = sourceNumber;}
+    if (sourceNumber < fromA){fromA = sourceNumber;}
     double deltaA = fromB - fromA;
     double deltaB = toB - toA;
     double scale  = deltaB / deltaA;
