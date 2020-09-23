@@ -7,15 +7,15 @@
 Digital_out digiout(5);
 Digital_in  digiin(2);
 Analog_in analogIn(0);
-Analog_out analogOut(0.5);
-unsigned int val = 0;
+//Analog_out analogOut(0.5);
+int val = 0;
 
 void setup() {
 
 digiout.init();
 digiin.init();
 analogIn.init();
-analogOut.init();
+//analogOut.init();
 sei(); 
 Serial.begin(9600);
 analogOut.changemode();
@@ -23,10 +23,11 @@ analogOut.changemode();
 
 void loop() {
 
-  //val = map(analogIn.getval(), 40, 200, 1, 255);
-  val = 255 - 5*analogIn.getval();
-  Serial.println(val);
-  analogOut.dutyset(val/255.0);
+  //val = analogIn.getval();
+  
+  //Serial.println(val);
+  
+  //analogOut.dutyset(val/(float)255);
 
 }
 
@@ -34,13 +35,13 @@ void loop() {
 
 ISR(INT0_vect) {
 
-  cli();
+Serial.println("Interrupt!!");
 
-  Serial.println("Interrupt!!");
+digiout.toggle();
 
-  analogOut.changemode();
+// The ISR runs while the button is held
+while(digiin.is_lo()) {}
 
-  sei();
 
 }
 

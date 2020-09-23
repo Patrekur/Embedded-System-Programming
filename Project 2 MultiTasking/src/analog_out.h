@@ -15,7 +15,7 @@ private:
     bool mode;
     // Scales the cmprcount value down for a shorter duty cycle. The value for compare register B
     float dutyCycle;
-    // Compare register value for compareA
+    // PWM operating at 1 Hz given 1024 prescaler
     unsigned int cmprcount;
 
 };
