@@ -1,4 +1,8 @@
 #include <Arduino.h>
+#include "analog_in.h"
+#include "analog_out.h"
+#include "digital_out.h"
+#include "filter.h"
 
 /**
  * The base State class declares methods that all Concrete State should
@@ -27,8 +31,9 @@ class State {
 
   virtual void OnEntry() = 0;
   virtual void OnExit() = 0;
-  virtual void Handle1() = 0;
-  virtual void Handle2() = 0;
+  virtual void Reset() = 0;
+  virtual void Housekeeping() = 0;
+  virtual void Do() = 0;
 };
 
 /**
@@ -76,12 +81,8 @@ class Context {
    * The Context delegates part of its behavior to the current State object.
    */
 
-  void Request1() {
-    this->state_->Handle1();
-  }
-
-  void Request2() {
-    this->state_->Handle2();
+  void Reset() {
+    this->state_->Reset();
   }
 
 };
@@ -91,25 +92,23 @@ class Context {
  * Context.
  */
 
-class ConcreteStateA : public State {
+class Initialization : public State {
  public:
    void OnEntry() override {
-    Serial.println("Entering ConcreteStateA.");
+     
+
+    
   }
 
   void OnExit() override {
     Serial.println("Exiting ConcreteStateA.");
   }
 
-  void Handle1() override;
-
-  void Handle2() override {
-    Serial.println("ConcreteStateA handles Request2.");
-  }
+  void Reset() override;
 
 };
 
-class ConcreteStateB : public State {
+class Operational : public State {
  public:
   void OnEntry() override {
     Serial.println("Entering ConcreteStateB.");
@@ -119,23 +118,31 @@ class ConcreteStateB : public State {
     Serial.println("Exiting ConcreteStateB.");
   }
 
-  void Handle1() override {
+  void Reset() override {
     Serial.println("ConcreteStateB handles Request1.");
   }
 
-  void Handle2() override {
-    Serial.println("ConcreteStateB handles Request2.");
-    Serial.println("ConcreteStateB wants to change the state of the context.");
-    this->context_->TransitionTo(new ConcreteStateA);
+  void Housekeeping() override {
+
+
+
+  }
+
+  void Do() override {
+
+
+  }
+
+  
   }
 
 };
 
-void ConcreteStateA::Handle1() {
+void Initialization::Reset() {
   {
     Serial.println("ConcreteStateA handles Request1.");
     Serial.println("ConcreteStateA wants to change the state of the context.");
-    this->context_->TransitionTo(new ConcreteStateB);
+    this->context_->TransitionTo(new Operational);
   }
 }
 
@@ -144,22 +151,19 @@ Context *context;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  context = new Context(new ConcreteStateA);
+  context = new Context(new Initialization);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(100);
+  context->Housekeeping
 
   if(Serial.available())
   {
-    switch (Serial.read())
+    switch (Serial.readuntil())
     {
       case '1':
-        context->Request1();
-        break;
-      case '2':
-        context->Request2();
+        context->Reset();
         break;
     }
   }
