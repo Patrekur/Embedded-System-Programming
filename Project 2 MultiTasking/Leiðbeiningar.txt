@@ -1,0 +1,15 @@
+Embedded Systems Programming
+Háskólinn í Reykjavík, haust 2020
+
+Hópur 2: Eiður Ágúst Egilsson og Patrekur Smári Þrastarson
+
+
+Project 2 - Multi-tasking
+
+Það eru þrjár main.cpp-skrár; mainPart1.cpp sem inniheldur part 1 í verkefninu, 
+mainPart2.cpp sem inniheldur filter klasann, og mainPart2Debauncing.cpp sem inniheldur
+debouncing klasann. 
+
+MainPart2Debouncing.cpp virkar ekki. Það var eins og interruptið á timer2 hafði áhrif á LED pinnann okkar. Mjög skrítið. 
+
+Ef þú rekst á main skrá sem er kommentuð út að fullu þá notum við ctrl-a og ctrl-k-u til að af-kommenta kóðann. 

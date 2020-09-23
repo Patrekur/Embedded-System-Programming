@@ -3,7 +3,11 @@
 Analog_out::Analog_out(float duty) {
 
     dutyCycle = duty;
+<<<<<<< HEAD
     cmprcount = 16000000/256 - 1;
+=======
+    cmprcount = 16000000/256 - 1; //65295
+>>>>>>> ef2650db694c30d96650698f73c450553b61c3ec
     mode = false;
 
 }
@@ -20,7 +24,11 @@ void Analog_out::init() {
     // Clear timer on compare 
     TCCR1B |= (1 << WGM12); 
     // set interrupt on compare match A and B
+<<<<<<< HEAD
     TIMSK1 |= (1 << OCIE1A) | (1 << OCIE0B);
+=======
+    TIMSK1 |= (1 << OCIE1A) | (1 << OCIE0B); // segir hvaða registerar triggera interrupt
+>>>>>>> ef2650db694c30d96650698f73c450553b61c3ec
     // set prescaler to 256 and start the timer
     TCCR1B |= (1 << CS12);
 
