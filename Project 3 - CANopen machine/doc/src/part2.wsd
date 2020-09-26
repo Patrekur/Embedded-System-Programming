@@ -1,0 +1,31 @@
+@startuml
+' left to right direction
+scale 2
+
+
+class Initialization  {
+    ' Variables
+    int number; 
+
+    ' Functions
+    Analog_in()
+    Analog_out()
+    
+
+
+} 
+
+
+
+class Operational   {
+    blinkLED()
+    
+}
+
+
+Initialization -right-> Operational: ID | Boot-up
+
+Operational -left-> Initialization: Reset
+
+
+@enduml
