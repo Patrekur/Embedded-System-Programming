@@ -1,38 +1,4 @@
-/**
- * The base State class declares methods that all Concrete State should
- * implement and also provides a backreference to the Context object, associated
- * with the State. This backreference can be used by States to transition the
- * Context to another State.
- */
-
-#include <context.h>
-/**
- * The Context defines the interface of interest to clients. It also maintains a
- * reference to an instance of a State subclass, which represents the current
- * state of the Context.
- */
-
-class Context {
-  /**
-   * @var State A reference to the current state of the Context.
-   */
-
- private:
-  State *state_;
-
- public:
-
-  Context(State *state) : state_(nullptr) {
-    this->TransitionTo(state);
-  }
-
-  ~Context() {
-    delete state_;
-  }
-    
-  /**
-   * The Context allows changing the State object at runtime.
-   */
+#include "context.h"
 
   void TransitionTo(State *state) {
     Serial.println("Context: Transition");
