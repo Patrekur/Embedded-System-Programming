@@ -3,6 +3,7 @@
 #include "analog_out.h"
 #include "digital_out.h"
 #include "context.h"
+#include "states.h"
 #include "filter.h"
 #include "timer.h"
 
@@ -12,14 +13,13 @@ Analog_in input(0);
 Analog_out output(0.5);
 Timer tim(1);
 
-
 Context *context;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   // Goes into initialization state
-  context = new Context(new ConcreteStateA);
+  context = new Context(new Initialize);
   tim.init();
   ledStatus.init();
   tim.start();
@@ -40,10 +40,10 @@ void loop() {
     {
       // State 
       case '1':
-        context->Request1();
+        context->Reset();
         break;
       case '2':
-        context->Request2();
+        context->Configure();
         break;
     }
   }
@@ -53,21 +53,20 @@ void loop() {
 ISR(TIMER1_COMPB_vect)
 {
 
-  digiout.set_lo();
+  ledOut.set_lo();
 
 }
 
 ISR(TIMER1_COMPA_vect)
 {
 
-  digiout.set_hi();
+  ledOut.set_hi();
 
 }
 
 // Status light interrupt
 ISR(TIMER2_COMPA_vect) {
 
-Serial.println("Interrupt!!");
 tim.incrTime();
 
 if (tim.isFinished()) {

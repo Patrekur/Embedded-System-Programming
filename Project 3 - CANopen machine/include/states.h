@@ -3,6 +3,8 @@
 #include <arduino.h>
 #include "context.h"
 
+class Context;
+
 class State {
 
   protected:
@@ -16,32 +18,42 @@ class State {
      this->context_ = context;
    }
 
+  // !!Þurfum að breyta Handle í eventa sem þarf að implementa fyrir hvert state!!
+// Events:
+// Reset (all states), Configure (Preop), (set)preOp (Stopped, Op), (set)Op (Stopped, Preop), clearFault (Stopped)
   virtual void OnEntry() = 0;
   virtual void OnExit() = 0;
-  virtual void Handle1() = 0;
-  virtual void Handle2() = 0;
+  virtual void Reset() = 0;
+  virtual void Configure() = 0;
+  virtual void setPreOp() = 0;
+  virtual void setOp() = 0;
+  virtual void clearFault() = 0;
    
   };
 
 class Initialize : public State {
  public:
   
-  void OnEntry() override;
-  void OnExit() override;
-  void Handle1() override;
-  void Handle2() override;
+  void OnEntry();
+  void OnExit();
+  void Reset();
+  void Configure();
+  void setPreOp();
+  void setOp();
+  void clearFault();
 
 };
 
 class Operational : public State {
+ 
  public:
-  void OnEntry() override;
-
-  void OnExit() override;
-
-  void Handle1() override;
-
-  void Handle2() override;
+  void OnEntry();
+  void OnExit();
+  void Reset();
+  void Configure();
+  void setPreOp();
+  void setOp();
+  void clearFault();
 
 };
 

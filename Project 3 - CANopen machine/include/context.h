@@ -1,3 +1,8 @@
+#ifndef CONTEXT_H
+#define CONTEXT_H
+#include "states.h"
+
+class State;
 
 class Context {
 
@@ -15,8 +20,9 @@ class Context {
   }
 
   void TransitionTo(State *state);
-  void Request1();
-  void Request2();
+  void Reset();
+  void Configure();
 
 };
 
+#endif

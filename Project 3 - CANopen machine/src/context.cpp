@@ -1,6 +1,6 @@
 #include "context.h"
 
-  void TransitionTo(State *state) {
+  void Context::TransitionTo(State *state) {
     Serial.println("Context: Transition");
 
     if (this->state_ != nullptr) {
@@ -13,16 +13,13 @@
     this->state_->OnEntry();
   }
 
-  /**
-   * The Context delegates part of its behavior to the current State object.
-   */
-
-  void Request1() {
-    this->state_->Handle1();
+  void Context::Reset() {
+    Serial.println("Context: Resetting");
+    this->state_->Reset();
   }
 
-  void Request2() {
-    this->state_->Handle2();
+  void Context::Configure() {
+    Serial.println("Context: configuring");
+    this->state_->Configure();
   }
 
-};

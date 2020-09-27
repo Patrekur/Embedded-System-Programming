@@ -2,11 +2,11 @@
 
 // Initialize member functions
 
-void Initialize::OnEntry() override {
-    Serial.println("Entering ConcreteStateA.");
+void Initialize::OnEntry() {
+    //ledOut.init();
   }
 
-  void Initialize::OnExit() override {
+  void Initialize::OnExit() {
     Serial.println("Exiting ConcreteStateA.");
   }
 
@@ -14,38 +14,70 @@ void Initialize::OnEntry() override {
 // Events:
 // Reset (all states), Configure (Preop), (set)preOp (Stopped, Op), (set)Op (Stopped, Preop), clearFault (Stopped)
 
-void Initialize::Handle1() {
+void Initialize::Reset() {
   {
     Serial.println("ConcreteStateA handles Request1.");
     Serial.println("ConcreteStateA wants to change the state of the context.");
-    this->context_->TransitionTo(new ConcreteStateB);
+    //this->context_->TransitionTo(new Operational);
   }
 }
 
-  void Initialize::Handle2() override {
+  void Initialize::Configure() {
     Serial.println("ConcreteStateA handles Request2.");
   }
 
+  void Initialize::setPreOp() {
+
+    Serial.println("Init: Going to preop");
+
+  }
+
+  void Initialize::setOp() {
+
+    Serial.println("Init: Do nothing");
+
+  }
+
+  void Initialize::clearFault() {
+
+    Serial.println("Init: Do nothing");
+
+  }
+
+
+
   // Operational member functions
 
-  void Operational::OnEntry() override {
+  void Operational::OnEntry() {
     Serial.println("Entering ConcreteStateB.");
   }
 
-  void Operational::OnExit() override {
+  void Operational::OnExit() {
     Serial.println("Exiting ConcreteStateB.");
   }
 
-  // !!Þurfum að breyta Handle í eventa sem þarf að implementa fyrir hvert state!!
-  // Events:
-  // Reset (all states), Configure (Preop), (set)preOp (Stopped, Op), (set)Op (Stopped, Preop), clearFault (Stopped)
-
-  void Operational::Handle1() override {
-    Serial.println("ConcreteStateB handles Request1.");
+  void Operational::Reset() {
+    Serial.println("Op: Resetting");
   }
 
-  void Operational::Handle2() override {
-    Serial.println("ConcreteStateB handles Request2.");
-    Serial.println("ConcreteStateB wants to change the state of the context.");
-    this->context_->TransitionTo(new ConcreteStateA);
+  void Operational::Configure() {
+    Serial.println("Op: Configure");
+    //this->context_->TransitionTo(new ConcreteStateA);
+  }
+
+   void Operational::setPreOp() {
+    Serial.println("Op: Going to preop");
+    //this->context_->TransitionTo(new Preop);
+  }
+
+   void Operational::setOp() {
+    
+    Serial.println("Op: go to op - do nothing");
+
+  }
+
+   void Operational::clearFault() {
+
+     Serial.println("Op: Clearfault - do nothing");
+
   }
