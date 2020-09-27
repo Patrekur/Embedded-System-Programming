@@ -3,52 +3,46 @@
 #include <arduino.h>
 #include "context.h"
 
+class State {
+
+  protected:
+     Context *context_;
+
+  public:
+  virtual ~State() {
+   }
+
+  void set_context(Context *context) {
+     this->context_ = context;
+   }
+
+  virtual void OnEntry() = 0;
+  virtual void OnExit() = 0;
+  virtual void Handle1() = 0;
+  virtual void Handle2() = 0;
+   
+  };
+
 class Initialize : public State {
  public:
-   void OnEntry() override {
-    Serial.println("Entering ConcreteStateA.");
-  }
-
-  void OnExit() override {
-    Serial.println("Exiting ConcreteStateA.");
-  }
-
+  
+  void OnEntry() override;
+  void OnExit() override;
   void Handle1() override;
-
-  void Handle2() override {
-    Serial.println("ConcreteStateA handles Request2.");
-  }
+  void Handle2() override;
 
 };
 
 class Operational : public State {
  public:
-  void OnEntry() override {
-    Serial.println("Entering ConcreteStateB.");
-  }
+  void OnEntry() override;
 
-  void OnExit() override {
-    Serial.println("Exiting ConcreteStateB.");
-  }
+  void OnExit() override;
 
-  void Handle1() override {
-    Serial.println("ConcreteStateB handles Request1.");
-  }
+  void Handle1() override;
 
-  void Handle2() override {
-    Serial.println("ConcreteStateB handles Request2.");
-    Serial.println("ConcreteStateB wants to change the state of the context.");
-    this->context_->TransitionTo(new ConcreteStateA);
-  }
+  void Handle2() override;
 
 };
-
-void Initialize::Handle1() {
-  {
-    Serial.println("ConcreteStateA handles Request1.");
-    Serial.println("ConcreteStateA wants to change the state of the context.");
-    this->context_->TransitionTo(new ConcreteStateB);
-  }
-}
 
 #endif
