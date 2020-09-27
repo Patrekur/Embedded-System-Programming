@@ -6,7 +6,11 @@
 
 class Timer {
 public:
-    
+    Timer() {
+
+        interval = 50;
+
+    }  
     Timer(int freq);
     // initalize the the timer (timer 1)
     void init();
