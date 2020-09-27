@@ -12,6 +12,12 @@
     this->state_->set_context(this);
     this->state_->OnEntry();
   }
+  
+  void Context::toggleStatus() {
+
+    ledStatus.toggle();
+
+  }
 
   void Context::Reset() {
     Serial.println("Context: Resetting");
@@ -21,5 +27,13 @@
   void Context::Configure() {
     Serial.println("Context: configuring");
     this->state_->Configure();
+  }
+  void Context::setOp() {
+    Serial.println("Context: configuring"); 
+    this->state_->setOp();
+  }
+   void Context::setPreOp() {
+    Serial.println("Context: configuring"); 
+    this->state_->setPreOp();
   }
 
