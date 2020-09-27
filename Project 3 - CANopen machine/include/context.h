@@ -1,25 +1,56 @@
-#include <arduino.h>
+#include <context.h>
+/**
+ * The Context defines the interface of interest to clients. It also maintains a
+ * reference to an instance of a State subclass, which represents the current
+ * state of the Context.
+ */
 
-class Context;
-
-class State {
+class Context {
   /**
-   * @var Context
+   * @var State A reference to the current state of the Context.
    */
 
- protected:
-  Context *context_;
+ private:
+  State *state_;
 
  public:
-  virtual ~State() {
+
+  Context(State *state) : state_(nullptr) {
+    this->TransitionTo(state);
   }
 
-  void set_context(Context *context) {
-    this->context_ = context;
+  ~Context() {
+    delete state_;
   }
 
-  virtual void OnEntry() = 0;
-  virtual void OnExit() = 0;
-  virtual void Handle1() = 0;
-  virtual void Handle2() = 0;
+  /**
+   * The Context allows changing the State object at runtime.
+   */
+
+  void TransitionTo(State *state) {
+    Serial.println("Context: Transition");
+
+    if (this->state_ != nullptr) {
+      this->state_->OnExit();
+      delete this->state_;
+    }
+
+    this->state_ = state;
+    this->state_->set_context(this);
+    this->state_->OnEntry();
+  }
+
+  /**
+   * The Context delegates part of its behavior to the current State object.
+   */
+
+  void Request1() {
+    this->state_->Handle1();
+  }
+
+  void Request2() {
+    this->state_->Handle2();
+  }
+
 };
+

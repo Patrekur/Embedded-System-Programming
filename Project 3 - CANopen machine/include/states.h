@@ -1,10 +1,9 @@
-/**
- * Concrete States implement various behaviors, associated with a state of the
- * Context.
- */
+#ifndef STATES_H
+#define STATES_H
 #include <arduino.h>
+#include "context.h"
 
-class ConcreteStateA : public State {
+class Initialize : public State {
  public:
    void OnEntry() override {
     Serial.println("Entering ConcreteStateA.");
@@ -22,7 +21,7 @@ class ConcreteStateA : public State {
 
 };
 
-class ConcreteStateB : public State {
+class Operational : public State {
  public:
   void OnEntry() override {
     Serial.println("Entering ConcreteStateB.");
@@ -44,10 +43,12 @@ class ConcreteStateB : public State {
 
 };
 
-void ConcreteStateA::Handle1() {
+void Initialize::Handle1() {
   {
     Serial.println("ConcreteStateA handles Request1.");
     Serial.println("ConcreteStateA wants to change the state of the context.");
     this->context_->TransitionTo(new ConcreteStateB);
   }
 }
+
+#endif
