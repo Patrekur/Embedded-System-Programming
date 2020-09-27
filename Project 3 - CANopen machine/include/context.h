@@ -29,6 +29,7 @@ class Context {
     delete state_;
   }
 
+<<<<<<< HEAD
   void init() {
 
     ledStatus.setpin(5);
@@ -39,10 +40,21 @@ class Context {
 
   };
 
+=======
+
+  void init() {
+
+    ledStatus.setpin(5);
+    ledStatus.init();
+
+  };
+>>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
   void toggleStatus();
   void TransitionTo(State *state);
   void Reset();
   void Configure();
+  void setOp();
+  void setPreOp();
 
 };
 

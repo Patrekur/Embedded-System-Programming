@@ -56,4 +56,14 @@ class Operational : public State {
 
 };
 
+class Pre_operational : public State {
+  void OnEntry();
+  void OnExit();
+  void Reset();
+  void Configure();
+  void setPreOp();
+  void setOp();
+  void clearFault();
+};
+
 #endif
