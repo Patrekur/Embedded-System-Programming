@@ -26,6 +26,20 @@ void Analog_out::init() {
 
 }
 
+void Analog_out::start() {
+
+    // set prescaler to 256 and start the timer
+    TCCR1B |= (1 << CS12);
+
+}
+
+void Analog_out::stop() {
+
+    // Disable clock
+    TCCR1B &= ~(1 << CS12);
+
+}
+
 void Analog_out::dutyset(float duty) {
 
     dutyCycle = duty;

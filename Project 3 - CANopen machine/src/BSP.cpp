@@ -1,17 +1,4 @@
-#include <arduino.h>
-#include "analog_in.h"
-#include "analog_out.h"
-#include "digital_out.h"
-#include "context.h"
 #include "states.h"
-#include "filter.h"
-#include "timer.h"
-
-Digital_out ledOut(4);
-Digital_out ledStatus(5);
-Analog_in input(0);
-Analog_out output(0.5);
-Timer tim(1);
 
 Context *context;
 
@@ -20,9 +7,10 @@ void setup() {
   Serial.begin(9600);
   // Goes into initialization state
   context = new Context(new Initialize);
-  tim.init();
-  ledStatus.init();
-  tim.start();
+  context->init();
+  //tim.init();
+  //ledStatus.init();
+  //tim.start();
 }
 
 // Events:
@@ -32,8 +20,12 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
+  delay(500);
+
+  context->toggleStatus();
 
   // Henda þessu inn í State sem housekeeping?
+  /*
   if(Serial.available())
   {
     switch (Serial.read())
@@ -47,32 +39,33 @@ void loop() {
         break;
     }
   }
+  */
 }
 
 // Timer 1 used for PWM, used by analog out class
 ISR(TIMER1_COMPB_vect)
 {
 
-  ledOut.set_lo();
+  //ledOut.set_lo();
 
 }
 
 ISR(TIMER1_COMPA_vect)
 {
 
-  ledOut.set_hi();
+  //ledOut.set_hi();
 
 }
 
 // Status light interrupt
 ISR(TIMER2_COMPA_vect) {
 
-tim.incrTime();
-
+//context->incrTime();
+/*
 if (tim.isFinished()) {
 
-  ledStatus.toggle();
+  //ledStatus.toggle();
 
 }
-
+*/
 }

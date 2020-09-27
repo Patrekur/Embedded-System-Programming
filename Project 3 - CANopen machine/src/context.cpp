@@ -13,6 +13,12 @@
     this->state_->OnEntry();
   }
 
+  void Context::toggleStatus() {
+
+    ledStatus.toggle();
+
+  }
+
   void Context::Reset() {
     Serial.println("Context: Resetting");
     this->state_->Reset();

@@ -1,6 +1,5 @@
 #ifndef STATES_H
 #define STATES_H
-#include <arduino.h>
 #include "context.h"
 
 class Context;

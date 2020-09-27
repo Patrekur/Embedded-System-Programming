@@ -2,8 +2,9 @@
 
 // Initialize member functions
 
+
 void Initialize::OnEntry() {
-    //ledOut.init();
+    this->context_->toggleStatus();
   }
 
   void Initialize::OnExit() {
@@ -18,7 +19,7 @@ void Initialize::Reset() {
   {
     Serial.println("ConcreteStateA handles Request1.");
     Serial.println("ConcreteStateA wants to change the state of the context.");
-    //this->context_->TransitionTo(new Operational);
+    this->context_->TransitionTo(new Operational);
   }
 }
 
@@ -58,6 +59,7 @@ void Initialize::Reset() {
 
   void Operational::Reset() {
     Serial.println("Op: Resetting");
+    this->context_->TransitionTo(new Initialize);
   }
 
   void Operational::Configure() {

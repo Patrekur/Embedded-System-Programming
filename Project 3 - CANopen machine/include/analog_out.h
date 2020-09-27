@@ -3,6 +3,11 @@
 class Analog_out {
 public:
     // Constructor
+    Analog_out() {
+
+        dutyCycle = 0.5;
+
+    }
     Analog_out(float duty);
     void init();
     // Duty cycle set

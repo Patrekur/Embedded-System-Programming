@@ -1,5 +1,10 @@
 #include "digital_out.h"
 
+Digital_out::Digital_out() {
+
+    pinMask = (1 << 5);
+
+}
 
 Digital_out::Digital_out(int pin) {
 
