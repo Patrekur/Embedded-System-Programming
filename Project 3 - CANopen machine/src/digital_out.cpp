@@ -2,7 +2,6 @@
 
 Digital_out::Digital_out() {
 
-    pinMask = (1 << 5);
 
 }
 

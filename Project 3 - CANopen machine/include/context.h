@@ -29,32 +29,37 @@ class Context {
     delete state_;
   }
 
-<<<<<<< HEAD
-  void init() {
-
-    ledStatus.setpin(5);
-    ledOut.setpin(4);
-    input.init();
-    output.init();
-    ledStatus.init();
-
-  };
-
-=======
-
-  void init() {
-
-    ledStatus.setpin(5);
-    ledStatus.init();
-
-  };
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
+  // Input / Output functions used in main
+  void init();
   void toggleStatus();
+  void hiStatus();
+  void loStatus();
+  // Timer functions
+  void timeStart();
+  void timeStop();
+  void incrTime();
+  bool isFinished();
+  void setfreq(int freq);
+  // Led out functions
+  void outHi();
+  void outLo();
+  // PWM out functions
+  void pwmstart();
+  void pwmstop();
+  void pwmset(float duty);
+  void changemode();
+  // Analog infunctions
+  int getVal();
+
+  // Status functions
   void TransitionTo(State *state);
   void Reset();
   void Configure();
   void setOp();
   void setPreOp();
+  void clearFault();
+  void housekeeping();
+  void dostuff();
 
 };
 

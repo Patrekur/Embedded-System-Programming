@@ -21,8 +21,6 @@ void Analog_out::init() {
     TCCR1B |= (1 << WGM12); 
     // set interrupt on compare match A and B
     TIMSK1 |= (1 << OCIE1A) | (1 << OCIE0B);
-    // set prescaler to 256 and start the timer
-    TCCR1B |= (1 << CS12);
 
 }
 
@@ -42,6 +40,7 @@ void Analog_out::stop() {
 
 void Analog_out::dutyset(float duty) {
 
+    Serial.println(duty);
     dutyCycle = duty;
     OCR1B = (unsigned int)(cmprcount*dutyCycle);
     //Serial.println("In class:");

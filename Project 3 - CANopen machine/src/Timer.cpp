@@ -20,7 +20,7 @@
         // set interrupt on compare match A
         TIMSK2 |= (1 << OCIE2A);
         // set prescaler to 1024 and start the timer
-        TCCR2B |= (1 << CS22) | (1 << CS21) | (1 < CS20);
+        //TCCR2B |= (1 << CS22) | (1 << CS21) | (1 < CS20);
 
     }
     

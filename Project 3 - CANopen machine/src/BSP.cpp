@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
 #include "states.h"
 
 Context *context;
@@ -11,16 +7,9 @@ void setup() {
   Serial.begin(9600);
   // Goes into initialization state
   context = new Context(new Initialize);
-<<<<<<< HEAD
-  context->init();
   //tim.init();
   //ledStatus.init();
   //tim.start();
-=======
-  // tim.init();
-  // ledStatus.init();
-  // tim.start();
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
 }
 
 // Events:
@@ -28,85 +17,45 @@ void setup() {
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  delay(100);
 
-<<<<<<< HEAD
-  delay(500);
+  
+  // Housekeeping accepts serial commands:
+  // 1 - Reset
+  // 2 - Configure
+  // 3 - Set operatonal
+  // 4 - Set pre-operational
+  // 5 - Clear fault
 
-  context->toggleStatus();
-=======
-  //delay(500);
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
-
-  //context->toggleStatus();  
-  // Henda þessu inn í State sem housekeeping?
-  /*
-  if(Serial.available())
-  {
-    switch (Serial.read())
-    {
-      // State 
-      case '1':
-        context->Reset();
-        break;
-      case '2':
-        context->Configure();
-        break;
-      case '3':
-        context->setOp();
-        break;
-      case '4':
-        context->setPreOp();
-        break;
-    }
-  }
-  */
+  context->housekeeping(); 
+  context->dostuff();
+  
 }
 
 // Timer 1 used for PWM, used by analog out class
-// ISR(TIMER1_COMPB_vect)
-// {
+ISR(TIMER1_COMPB_vect)
+ {
 
-<<<<<<< HEAD
-  //ledOut.set_lo();
-=======
-//   ledOut.set_lo();
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
+  context->outLo();
 
-// }
+ }
 
-// ISR(TIMER1_COMPA_vect)
-// {
+ISR(TIMER1_COMPA_vect)
+  {
 
-<<<<<<< HEAD
-  //ledOut.set_hi();
-=======
-//   ledOut.set_hi();
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc
+  context->outHi();
 
-// }
+ }
 
-// // Status light interrupt
-// ISR(TIMER2_COMPA_vect) {
+//Status light interrupt
+ISR(TIMER2_COMPA_vect) {
 
-<<<<<<< HEAD
-//context->incrTime();
-/*
-if (tim.isFinished()) {
+context->incrTime();
 
-  //ledStatus.toggle();
+if (context->isFinished()) {
+
+   context->toggleStatus();
 
 }
-*/
+
 }
-=======
-// tim.incrTime();
-
-// if (tim.isFinished()) {
-
-//   ledStatus.toggle();
-
-// }
-
-// }
->>>>>>> 7c36852d14850b3d5f0969ba961b492cc37665fc

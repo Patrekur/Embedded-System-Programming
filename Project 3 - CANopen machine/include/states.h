@@ -1,5 +1,6 @@
 #ifndef STATES_H
 #define STATES_H
+//#include <Arduino.h>
 #include "context.h"
 
 class Context;
@@ -17,9 +18,6 @@ class State {
      this->context_ = context;
    }
 
-  // !!Þurfum að breyta Handle í eventa sem þarf að implementa fyrir hvert state!!
-// Events:
-// Reset (all states), Configure (Preop), (set)preOp (Stopped, Op), (set)Op (Stopped, Preop), clearFault (Stopped)
   virtual void OnEntry() = 0;
   virtual void OnExit() = 0;
   virtual void Reset() = 0;
@@ -27,6 +25,7 @@ class State {
   virtual void setPreOp() = 0;
   virtual void setOp() = 0;
   virtual void clearFault() = 0;
+  virtual void dostuff() = 0;
    
   };
 
@@ -40,6 +39,7 @@ class Initialize : public State {
   void setPreOp();
   void setOp();
   void clearFault();
+  void dostuff();
 
 };
 
@@ -53,6 +53,7 @@ class Operational : public State {
   void setPreOp();
   void setOp();
   void clearFault();
+  void dostuff();
 
 };
 
@@ -64,6 +65,18 @@ class Pre_operational : public State {
   void setPreOp();
   void setOp();
   void clearFault();
+  void dostuff();
+};
+
+class Stopped : public State {
+  void OnEntry();
+  void OnExit();
+  void Reset();
+  void Configure();
+  void setPreOp();
+  void setOp();
+  void clearFault();
+  void dostuff();
 };
 
 #endif

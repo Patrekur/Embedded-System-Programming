@@ -2,7 +2,7 @@
 
 class Analog_out {
 public:
-    // Constructor
+    // Constructors
     Analog_out() {
 
         dutyCycle = 0.5;
@@ -10,6 +10,8 @@ public:
     }
     Analog_out(float duty);
     void init();
+    void start();
+    void stop();
     // Duty cycle set
     void dutyset(float duty);
     // Low/high frequency mode -- 1 Hz / 625 Hz
